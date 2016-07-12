@@ -58,6 +58,17 @@ $ run-when-changed \
 $ run-when-changed --watch "**/*.js" --filter "*-test.js" --exec "ls -la %s"
 ```
 
+### Running mocha
+
+This command will execute `mocha` test runner for all `tests/**/*-test.js` files.
+
+```
+run-when-changed \
+  --watch "tests/**/*-test.js" \
+  --exec "mocha --require babel-register %s" \
+  --verbose
+```
+
 ## Notes
 
 1. `filter` and `exec` applies only to immediately preceeding `watch`
