@@ -63,11 +63,25 @@ $ run-when-changed --watch "**/*.js" --filter "*-test.js" --exec "ls -la %s"
 This command will execute `mocha` test runner for all `tests/**/*-test.js` files.
 
 ```
-run-when-changed \
+$ run-when-changed \
   --watch "tests/**/*-test.js" \
   --exec "mocha --require babel-register %s" \
   --verbose
 ```
+
+### How to use this in your project?
+
+Install locally (`npm install --save-dev run-when-changed`) then add the following to your `package.json` (this is Mocha specific example):
+
+```js
+{
+  "scripts": {
+    "dev": "run-when-changed --watch 'tests/**/*-test.js' --exec 'mocha --require babel-register %s'"
+  }
+}
+```
+
+You can now use `npm run dev` command to start a file watcher that will execute the test file you are working on without having to add `.only`.
 
 ## Notes
 

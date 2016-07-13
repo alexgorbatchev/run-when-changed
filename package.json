@@ -14,7 +14,18 @@
     "prepublish": "babel index.js --out-dir ./lib --source-maps",
     "dev": "babel index.js --out-dir ./lib --source-maps --watch"
   },
-  "keywords": [],
+  "keywords": [
+    "watching",
+    "files",
+    "changes",
+    "exec",
+    "spawn",
+    "monitor",
+    "testing",
+    "mocha",
+    "gaze",
+    "watch"
+  ],
   "author": {
     "name": "Alex Gorbatchev",
     "url": "https://github.com/alexgorbatchev"
