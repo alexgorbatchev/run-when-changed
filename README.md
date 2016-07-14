@@ -37,6 +37,8 @@ Command line accepts the following tokens:
 * `%filepath` - Changed file directory, file name and extension relative to CWD.
 * `%s` - Same as `%filepath`.
 * `%package-json-dir` - Full path to nearest folder that contains `package.json`.
+* `full-filedir` - Full absolute changed file directory.
+* `full-filepath` - Full absolute changed file directory, file name and extension.
 
 ## Examples
 
