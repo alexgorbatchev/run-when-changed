@@ -28,6 +28,16 @@ Options:
   --verbose           Verbose mode
 ```
 
+## CMD format
+
+Command line accepts the following tokens:
+
+* `%filedir` - Changed file directory, relative to CWD.
+* `%filename` - Changed file name and extension.
+* `%filepath` - Changed file directory, file name and extension relative to CWD.
+* `%s` - Same as `%filepath`.
+* `%package-json-dir` - Full path to nearest folder that contains `package.json`.
+
 ## Examples
 
 ### Watching one or more glob
@@ -69,9 +79,13 @@ $ run-when-changed \
   --verbose
 ```
 
-### How to use this in your project?
+## NPM Package Usage Examples
 
-Install locally (`npm install --save-dev run-when-changed`) then add the following to your `package.json` (this is Mocha specific example):
+Install locally (`npm install --save-dev run-when-changed`) then add the following to your `package.json`
+
+### Mocha
+
+You can use `npm run dev` command to start a file watcher that will execute the test file you are working on without having to add `.only`.
 
 ```js
 {
@@ -81,7 +95,17 @@ Install locally (`npm install --save-dev run-when-changed`) then add the followi
 }
 ```
 
-You can now use `npm run dev` command to start a file watcher that will execute the test file you are working on without having to add `.only`.
+## Mocha & Babel
+
+You can use `npm run dev` command to start a file watcher that will execute the test file you are working on without having to add `.only` and compile `*.js` files in the root folder using Babel.js.
+
+```js
+{
+  "scripts": {
+    "dev": "run-when-changed.js --watch 'tests/**/*-test.js' --exec 'mocha --require babel-register %s' --watch '*.js' --exec 'babel %s --out-dir ./lib --source-maps'"
+  }
+}
+```
 
 ## Notes
 
