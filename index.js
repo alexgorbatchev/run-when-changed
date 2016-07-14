@@ -27,11 +27,11 @@ function startWatching({ watch, match, exec }, { verbose }) {
     });
 
     gaze.on('changed', filepath => {
-      filepath = filepath.replace(process.cwd() + '/', '');
+      const relativeFilepath = filepath.replace(process.cwd() + '/', '');
 
       exec.forEach(cmd => {
-        if (!match.reduce((last, match) => last && minimatch(filepath, match), true)) {
-          return log(`${prefix}: skipping ${filepath}`);
+        if (!match.reduce((last, match) => last && minimatch(relativeFilepath, match), true)) {
+          return log(`${prefix}: skipping ${relativeFilepath}`);
         }
 
         formatCmd(cmd, filepath).then(cmd => {
