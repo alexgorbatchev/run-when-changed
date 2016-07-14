@@ -1,8 +1,8 @@
 import { Gaze } from 'gaze';
-import { sprintf } from 'sprintf';
 import { spawn } from 'child_process';
 import ansiBold from 'ansi-bold';
 import minimatch from 'minimatch';
+import formatCmd from './format-cmd';
 
 function startWatching({ watch, match, exec }, { verbose }) {
   const list = (key, values) => values.map(value => `--${key}=${ansiBold(value)}`).join(', ');
@@ -29,16 +29,16 @@ function startWatching({ watch, match, exec }, { verbose }) {
     gaze.on('changed', filepath => {
       filepath = filepath.replace(process.cwd() + '/', '');
 
-      for (let cmd of exec) {
-        cmd = sprintf(cmd, filepath);
+      exec.forEach(cmd => {
+        if (!match.reduce((last, match) => last && minimatch(filepath, match), true)) {
+          return log(`${prefix}: skipping ${filepath}`);
+        }
 
-        if (match.reduce((last, match) => last && minimatch(filepath, match), true)) {
+        formatCmd(cmd, filepath).then(cmd => {
           log(`${prefix}: ${cmd}`);
           spawn('/bin/sh', [ '-c', cmd ], { stdio: 'inherit' });
-        } else {
-          log(`${prefix}: skipping ${filepath}`);
-        }
-      }
+        });
+      });
     });
   })
 }
