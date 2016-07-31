@@ -9,7 +9,7 @@ Selectively executes commands when watched files are changed.
 ## Installation
 
 ```
-npm instal --save-dev run-when-changed
+npm install --save-dev run-when-changed
 ```
 
 ## Usage
