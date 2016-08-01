@@ -37,8 +37,8 @@ Command line accepts the following tokens:
 * `%filepath` - Changed file directory, file name and extension relative to CWD.
 * `%s` - Same as `%filepath`.
 * `%package-json-dir` - Full path to nearest folder that contains `package.json`.
-* `full-filedir` - Full absolute changed file directory.
-* `full-filepath` - Full absolute changed file directory, file name and extension.
+* `%full-filedir` - Full absolute changed file directory.
+* `%full-filepath` - Full absolute changed file directory, file name and extension.
 
 ## Examples
 
@@ -51,11 +51,15 @@ $ run-when-changed --watch "**/*.js" --watch "README.md" --exec "ls -la %s"
 
 ### Executing multiple commands
 
+Having more than one `exec` passed per `watch` will execute multiple commands per file when there's a change event.
+
 ```
 $ run-when-changed --watch "**/*.js" --exec "ls -la %s" --exec "chmod +x %s"
 ```
 
 ### Watching multiple globs 
+
+You can `watch` multiple globs and execute commands specific to each glob. 
 
 ```
 $ run-when-changed \
