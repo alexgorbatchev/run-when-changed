@@ -30,7 +30,7 @@ function startWatching({ watch, match, exec }, { verbose }) {
       const relativeFilepath = filepath.replace(process.cwd() + '/', '');
 
       exec.forEach(cmd => {
-        if (!match.reduce((last, match) => last && minimatch(relativeFilepath, match), true)) {
+        if (!match.reduce((last, match) => last && minimatch(relativeFilepath, match, { dot: true }), true)) {
           return log(`${prefix}: skipping ${relativeFilepath}`);
         }
 
