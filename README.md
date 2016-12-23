@@ -4,7 +4,7 @@
 ![Downloads](https://img.shields.io/npm/dm/run-when-changed.svg)
 ![Version](https://img.shields.io/npm/v/run-when-changed.svg)
 
-Selectively executes commands when watched files are changed.
+Selectively executes commands when watched files are changed (Nix & Win32).
 
 ## Installation
 
@@ -57,9 +57,9 @@ Having more than one `exec` passed per `watch` will execute multiple commands pe
 $ run-when-changed --watch "**/*.js" --exec "ls -la %s" --exec "chmod +x %s"
 ```
 
-### Watching multiple globs 
+### Watching multiple globs
 
-You can `watch` multiple globs and execute commands specific to each glob. 
+You can `watch` multiple globs and execute commands specific to each glob.
 
 ```
 $ run-when-changed \

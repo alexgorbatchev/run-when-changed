@@ -1,8 +1,8 @@
-import { dirname, basename } from 'path';
+import { dirname, basename, sep } from 'path';
 import find from 'fs-find-root';
 
 export default function formatCmd(cmd, fullFilepath) {
-  const filepath = fullFilepath.replace(process.cwd() + '/', '');
+  const filepath = fullFilepath.replace(process.cwd() + sep, '');
   const filedir = dirname(filepath);
   const fullFiledir = dirname(fullFilepath);
   const filename = basename(filepath);

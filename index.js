@@ -1,5 +1,6 @@
 import { Gaze } from 'gaze';
 import { spawn } from 'child_process';
+import { sep } from 'path';
 import ansiBold from 'ansi-bold';
 import minimatch from 'minimatch';
 import formatCmd from './format-cmd';
@@ -27,7 +28,7 @@ function startWatching({ watch, match, exec }, { verbose }) {
     });
 
     gaze.on('changed', filepath => {
-      const relativeFilepath = filepath.replace(process.cwd() + '/', '');
+      const relativeFilepath = filepath.replace(process.cwd() + sep, '');
 
       exec.forEach(cmd => {
         if (!match.reduce((last, match) => last && minimatch(relativeFilepath, match, { dot: true }), true)) {
@@ -36,7 +37,7 @@ function startWatching({ watch, match, exec }, { verbose }) {
 
         formatCmd(cmd, filepath).then(cmd => {
           log(`${prefix}: ${cmd}`);
-          spawn('/bin/sh', [ '-c', cmd ], { stdio: 'inherit' });
+          spawn(cmd, [], { shell: true, stdio: 'inherit' });
         });
       });
     });
