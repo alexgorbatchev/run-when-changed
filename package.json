@@ -11,7 +11,7 @@
     "bin"
   ],
   "scripts": {
-    "prepublish": "babel *.js --out-dir ./lib --source-maps",
+    "prepublish": "babel *.js --out-dir ./lib --source-maps && mv ./lib/run-when-changed.* ./bin",
     "test": "mocha --require babel-register tests/**/*-test.js",
     "dev": "./bin/run-when-changed.js --watch 'tests/**/*-test.js' --exec 'mocha --require babel-register %s' --watch '*.js' --exec 'babel %s --out-dir ./lib --source-maps'"
   },
