@@ -47,7 +47,5 @@ function startWatching({ watch, match, exec }, options) {
 }
 
 export default function runWhenChanged(watches, opts) {
-  for (const set of watches) {
-    startWatching(set, opts);
-  }
+  watches.forEach(set => startWatching(set, opts));
 }
