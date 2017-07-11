@@ -17,7 +17,6 @@ function startWatching({ watch, match, exec }, options) {
   return new Promise(resolve => {
     match = match || [ '**/*' ];
     const prefix = [ list('watch', watch), list('match', match), list('exec', exec) ].join(' ');
-    console.log(JSON.stringify(options.gazeOptions));
     const gaze = new Gaze(watch, options.gazeOptions);
 
     gaze.on('ready', watcher => {
