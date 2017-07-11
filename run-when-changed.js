@@ -32,9 +32,19 @@ commander
   .option('-w, --watch <glob>', 'A glob to watch, starts a new group', val => add('watch', val))
   .option('-e, --exec <cmd>', 'Command to execute, eg "echo %s"', val => add('exec', val))
   .option('-m, --match [glob]', 'Only files that match will be executed', val => add('match', val))
-  .option('--verbose', 'Verbose mode')
-  .parse(process.argv)
+  .option('-i, --interval [milliseconds]', 'Interval to pass to fs.watchFile in milliseconds')
+  .option('-d, --debounce [milliseconds]', 'Delay for events called in succession for the same file/event in milliseconds')
+  .option('-m, --mode [auto|watch|poll]',
+    "Force the watch mode. Either 'auto' (default), 'watch' (force native events), or 'poll' (force stat polling)")
+  .option('-c, --cwd [directory]', 'The current working directory to base file patterns from. Default is process.cwd()')
+  .option('--verbose', 'Verbose mode').parse(process.argv);
 
-runWhenChanged(watches, {
-  verbose: commander.verbose
+runWhenChanged(watches,  {
+  verbose: commander.verbose,
+  gazeOptions: {
+    interval: commander.interval,
+    debounce: commander.debounce,
+    mode: commander.mode,
+    cwd: commander.cwd
+  }
 });
