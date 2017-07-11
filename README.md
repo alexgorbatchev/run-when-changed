@@ -21,11 +21,15 @@ Selectively executes commands when watched files are changed.
 
 Options:
 
-  -h, --help          output usage information
-  -w, --watch <glob>  A glob to watch, starts a new group
-  -e, --exec <cmd>    Command to execute, eg "echo %s"
-  -m, --match [glob]  Only files that match will be executed
-  --verbose           Verbose mode
+  -h, --help                    Output usage information
+  -w, --watch <glob>            A glob to watch, starts a new group
+  -e, --exec <cmd>              Command to execute, eg "echo %s"
+  -m, --match [glob]            Only files that match will be executed
+  -i, --interval [milliseconds] Interval to pass to fs.watchFile in milliseconds
+  -d, --debounce [milliseconds] Delay for events called in succession for the same file/event in milliseconds
+  -m, --mode [auto|watch|poll]  Force the watch mode. Either 'auto' (default), 'watch' (force native events), or 'poll' (force stat polling)
+  -c, --cwd [directory]         The current working directory to base file patterns from. Default is process.cwd()
+  --verbose                     Verbose mode
 ```
 
 ## CMD format
