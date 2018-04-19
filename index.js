@@ -5,7 +5,8 @@ import ansiBold from 'ansi-bold';
 import minimatch from 'minimatch';
 import formatCmd from './format-cmd';
 
-function startWatching({ watch, match, exec }, { verbose }) {
+function startWatching({ watch, match, exec }, options) {
+  const verbose = options.verbose;
   const list = (key, values) => values.map(value => `--${key}=${ansiBold(value)}`).join(', ');
   const log = msg => {
     if (verbose) {
@@ -16,7 +17,7 @@ function startWatching({ watch, match, exec }, { verbose }) {
   return new Promise(resolve => {
     match = match || [ '**/*' ];
     const prefix = [ list('watch', watch), list('match', match), list('exec', exec) ].join(' ');
-    const gaze = new Gaze(watch);
+    const gaze = new Gaze(watch, options.gazeOptions);
 
     gaze.on('ready', watcher => {
       if (Object.keys(watcher.watched()).length) {
@@ -30,6 +31,7 @@ function startWatching({ watch, match, exec }, { verbose }) {
     gaze.on('changed', filepath => {
       const relativeFilepath = filepath.replace(process.cwd() + sep, '');
 
+      console.log("changed"+filepath);
       exec.forEach(cmd => {
         if (!match.reduce((last, match) => last && minimatch(relativeFilepath, match, { dot: true }), true)) {
           return log(`${prefix}: skipping ${relativeFilepath}`);
