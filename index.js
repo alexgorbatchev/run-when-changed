@@ -31,7 +31,6 @@ function startWatching({ watch, match, exec }, options) {
     gaze.on('changed', filepath => {
       const relativeFilepath = filepath.replace(process.cwd() + sep, '');
 
-      console.log("changed"+filepath);
       exec.forEach(cmd => {
         if (!match.reduce((last, match) => last && minimatch(relativeFilepath, match, { dot: true }), true)) {
           return log(`${prefix}: skipping ${relativeFilepath}`);
