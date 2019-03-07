@@ -36,10 +36,14 @@ function startWatching({ watch, match, exec }, options) {
           return log(`${prefix}: skipping ${relativeFilepath}`);
         }
 
-        formatCmd(cmd, filepath).then(cmd => {
-          log(`${prefix}: ${cmd}`);
-          spawn(cmd, [], { shell: true, stdio: 'inherit' });
-        });
+        formatCmd(cmd, filepath)
+          .then(cmd => {
+            log(`${prefix}: ${cmd}`);
+            spawn(cmd, [], { shell: true, stdio: 'inherit' });
+          })
+          .catch(error => {
+            console.error(error)
+          });
       });
     });
   })
