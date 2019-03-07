@@ -1,6 +1,26 @@
 import { dirname, basename, sep } from 'path';
 import find from 'fs-find-root';
 
+function packageJsonIsRequired(cmd) {
+  return new RegExp('%package-json-dir').test(cmd);
+}
+
+function findPackageJsonDir(isRequired, fullFiledir) {
+  if (!isRequired) {
+    return Promise.resolve('');
+  }
+
+  return find
+    .file('package.json', fullFiledir)
+    .then(rootDir => {
+      if (rootDir === null) {
+        throw new Error('package.json path has been used in the command but it could not be found in the folder tree.')
+      }
+
+      return rootDir
+    });
+}
+
 export default function formatCmd(cmd, fullFilepath) {
   const filepath = fullFilepath.replace(process.cwd() + sep, '');
   const filedir = dirname(filepath);
@@ -15,11 +35,7 @@ export default function formatCmd(cmd, fullFilepath) {
     'full-filepath': fullFilepath,
   };
 
-  // chances are we don't always have to look up package.json folder, but
-  // performance hit of this is probably so insignificant, it's not worth
-  // the time to optimize this... PRs welcome of course :)
-  return find
-    .file('package.json', fullFiledir)
+  return findPackageJsonDir(packageJsonIsRequired(cmd), fullFiledir)
     .then(rootDir => values['package-json-dir'] = dirname(rootDir))
     .then(() => {
       const keys = Object.keys(values).join('|');
