@@ -11,9 +11,10 @@
     "bin"
   ],
   "scripts": {
-    "prepublish": "babel *.js --out-dir ./lib --source-maps && mv ./lib/run-when-changed.* ./bin",
+    "prepublish": "npm run snyk-protect && babel *.js --out-dir ./lib --source-maps && mv ./lib/run-when-changed.* ./bin",
     "test": "mocha --require babel-register tests/**/*-test.js",
-    "dev": "./bin/run-when-changed.js --watch 'tests/**/*-test.js' --exec 'mocha --require babel-register %s' --watch '*.js' --exec 'babel %s --out-dir ./lib --source-maps'"
+    "dev": "./bin/run-when-changed.js --watch 'tests/**/*-test.js' --exec 'mocha --require babel-register %s' --watch '*.js' --exec 'babel %s --out-dir ./lib --source-maps'",
+    "snyk-protect": "snyk protect"
   },
   "keywords": [
     "watching",
@@ -49,6 +50,8 @@
     "commander": "^2.15.1",
     "fs-find-root": "^2.0.0",
     "gaze": "^1.1.2",
-    "minimatch": "^3.0.4"
-  }
+    "minimatch": "^3.0.4",
+    "snyk": "^1.319.1"
+  },
+  "snyk": true
 }
